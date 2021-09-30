@@ -20,7 +20,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
+      fetch-depth: 2
+    
     - name: Install Dependencies
       working-directory: ${{github.workspace}}
       run: python ./external/hello_imgui/tools/vcpkg_install_third_parties.py
