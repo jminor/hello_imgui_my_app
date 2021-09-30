@@ -20,16 +20,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        fetch-depth: 3
-
-    - run: find ${{github.workspace}}
 
     - name: Get Submodules
-      working-directory: ${{github.workspace}}
       run: git submodule update --init --recursive
-
-    - run: find ${{github.workspace}}
     
     - name: Install Dependencies
       run: |
@@ -46,8 +39,7 @@ jobs:
       run: |
         mkdir ${{github.workspace}}/build
         cd ${{github.workspace}}/build
-        cmake \
-              -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
+        cmake .. \
               -DCMAKE_TOOLCHAIN_FILE=../external/hello_imgui/vcpkg/scripts/buildsystems/vcpkg.cmake \
               -DHELLOIMGUI_USE_SDL_OPENGL3=ON
 
