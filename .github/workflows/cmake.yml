@@ -25,6 +25,8 @@ jobs:
       working-directory: ${{github.workspace}}
       run: git submodule update --init --recursive
     
+    - run: apt install libxinerama-dev libxcursor-dev xorg-dev libglu1-mesa-dev
+
     - name: Install Dependencies
       working-directory: ${{github.workspace}}
       run: python ./external/hello_imgui/tools/vcpkg_install_third_parties.py
