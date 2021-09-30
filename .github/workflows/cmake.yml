@@ -23,9 +23,13 @@ jobs:
       with:
         fetch-depth: 3
 
-    # - name: Get Submodules
-    #   working-directory: ${{github.workspace}}
-    #   run: git submodule update --init --recursive
+    - run: find ${{github.workspace}}
+
+    - name: Get Submodules
+      working-directory: ${{github.workspace}}
+      run: git submodule update --init --recursive
+
+    - run: find ${{github.workspace}}
     
     - name: Install Dependencies
       run: |
