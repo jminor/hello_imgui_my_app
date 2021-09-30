@@ -54,6 +54,8 @@ jobs:
     #   # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
     #   run: ctest -C ${{env.BUILD_TYPE}}
     
+    - run: find ${{github.workspace}}/build
+
     - name: Check Linux Product
       run: |
         working-directory: ${{github.workspace}}/build
@@ -66,4 +68,5 @@ jobs:
       with:
         name: hello-linux
         path: hello
+        working-directory: ${{github.workspace}}/build
 
