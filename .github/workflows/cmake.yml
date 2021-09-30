@@ -23,7 +23,8 @@ jobs:
 
     - name: Install Dependencies
       run: python ./external/hello_imgui/tools/vcpkg_install_third_parties.py
-      run: mkdir ${{github.workspace}}/build
+
+    - run: mkdir ${{github.workspace}}/build
 
     - name: Configure CMake
       working-directory: ${{github.workspace}}/build
