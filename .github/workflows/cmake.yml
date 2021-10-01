@@ -144,6 +144,7 @@ jobs:
 
     - name: Configure CMake
       run: |
+        source emsdk-master/emsdk_env.sh
         mkdir ${{github.workspace}}/build
         cd ${{github.workspace}}/build
         emcmake cmake .. \
