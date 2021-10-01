@@ -31,11 +31,16 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y libglfw3-dev libsdl2-dev gcc-multilib g++-multilib libfreetype6-dev
 
+    # - name: Install Dependencies
+    #   working-directory: ${{github.workspace}}
+    #   run: python ./external/hello_imgui/tools/vcpkg_install_third_parties.py
+
     - name: Configure CMake
       run: |
         mkdir ${{github.workspace}}/build
         cd ${{github.workspace}}/build
         cmake .. \
+              -DCMAKE_TOOLCHAIN_FILE=../external/hello_imgui/vcpkg/scripts/buildsystems/vcpkg.cmake \
               -DHELLOIMGUI_USE_SDL_OPENGL3=ON
 
     - name: Build
@@ -60,7 +65,7 @@ jobs:
       working-directory: ${{github.workspace}}/build
       run: |
         chmod +x hello
-        zip hello-linux.zip hello assets
+        zip -r hello-linux.zip hello assets
 
     - name: Archive Linux Product
       uses: actions/upload-artifact@v1
@@ -107,7 +112,7 @@ jobs:
       working-directory: ${{github.workspace}}/build
       run: |
         chmod +x hello
-        zip hello-mac.zip hello assets
+        zip -r hello-mac.zip hello assets
 
     - name: Archive MacOS Product
       uses: actions/upload-artifact@v1
