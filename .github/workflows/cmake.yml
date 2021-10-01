@@ -64,9 +64,8 @@ jobs:
         nm hello
 
     - name: Archive Linux Product
-      working-directory: ${{github.workspace}}/build
       uses: actions/upload-artifact@v1
       with:
         name: hello-linux
-        path: hello
+        path: build/hello
 
