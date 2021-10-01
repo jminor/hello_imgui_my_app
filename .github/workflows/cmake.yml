@@ -31,22 +31,14 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y libglfw3-dev libsdl2-dev gcc-multilib g++-multilib libfreetype6-dev
 
-    - name: Install Dependencies
-      working-directory: ${{github.workspace}}
-      run: python ./external/hello_imgui/tools/vcpkg_install_third_parties.py
-
     - name: Configure CMake
-      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: |
         mkdir ${{github.workspace}}/build
         cd ${{github.workspace}}/build
         cmake .. \
-              -DCMAKE_TOOLCHAIN_FILE=../external/hello_imgui/vcpkg/scripts/buildsystems/vcpkg.cmake \
               -DHELLOIMGUI_USE_SDL_OPENGL3=ON
 
     - name: Build
-      # Build your program with the given configuration
       working-directory: ${{github.workspace}}/build
       run: make
 
@@ -63,13 +55,18 @@ jobs:
       run: |
         ls -l hello
         file hello
-        nm hello
+
+    - name: Package Linux Product
+      working-directory: ${{github.workspace}}/build
+      run: |
+        chmod +x hello
+        zip hello-linux.zip hello assets
 
     - name: Archive Linux Product
       uses: actions/upload-artifact@v1
       with:
-        name: hello-linux
-        path: build/hello
+        name: hello-linux.zip
+        path: build/hello-linux.zip
 
   MacOS:
     runs-on: macOS-latest
@@ -105,10 +102,15 @@ jobs:
       run: |
         ls -l hello
         file hello
-        nm hello
+
+    - name: Package MacOS Product
+      working-directory: ${{github.workspace}}/build
+      run: |
+        chmod +x hello
+        zip hello-mac.zip hello assets
 
     - name: Archive MacOS Product
       uses: actions/upload-artifact@v1
       with:
-        name: hello-mac
-        path: build/hello
+        name: hello-mac.zip
+        path: build/hello-mac.zip
